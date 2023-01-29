@@ -1,9 +1,9 @@
 <template>
   <div>
     <h1>Social</h1>
-    <div class="social" v-for="social in socials" :key="social.id">
-      <RouterLink :to="{ name: 'socialdetail', params: { id: social.id } }">
-        <p>{{ social.name }}</p>
+    <div class="social" v-for="member in members" :key="member.id">
+      <RouterLink :to="{ name: 'socialdetail', params: { id: member.id } }">
+        {{ member.Name }}
       </RouterLink>
     </div>
   </div>
@@ -13,29 +13,18 @@
 export default {
   data() {
     return {
-      socials: [
-        {
-          name: "Facebook",
-          link: "https://www.facebook.com",
-          id: 1,
-        },
-        {
-          name: "Twitter",
-          link: "https://yuce.dev",
-          id: 2,
-        },
-        {
-          name: "Instagram",
-          link: "https://www.instagram.com",
-          id: 3,
-        },
-        {
-          name: "LinkedIn",
-          link: "https://www.linkedin.com",
-          id: 4,
-        },
-      ],
+      members: [],
     };
+  },
+  mounted() {
+    fetch("http://localhost:3000/Members")
+      .then((response) => response.json())
+      .then((data) => {
+        this.members = data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
 };
 </script>
